@@ -18,8 +18,10 @@ Vagrant.configure(2) do |config|
   config.hostmanager.manage_host = true
   config.hostmanager.include_offline = true
 
-  config.vm.define "mymachine" do |s|
+  config.vm.define "server" do |s|
+    #config.vm.box = "ubuntu/xenial64" # 16.04
     s.vm.box = "ubuntu/bionic64" # 18.04
+    # set memory to 2048m
     s.vm.provider "virtualbox" do |vb|
       vb.memory = vagrant_config['server']['memory']
       vb.cpus = vagrant_config['server']['cpus']
@@ -34,13 +36,13 @@ Vagrant.configure(2) do |config|
     # vagrant-hostmanager is necessary to update /etc/hosts on hosts and guests
     s.vm.network "private_network", ip: vagrant_config['server']['ip']
     s.vm.hostname = vagrant_config['server']['domain']
-    #s.hostmanager.aliases = %w(www.yourdomain.local)
+    #s.hostmanager.aliases = %w(www.yourdomain.lokal)
 
     # Run Ansible from the Vagrant VM
     s.vm.provision "ansible_local" do |ansible|
       ansible.install = true
       ansible.install_mode = :default
-      ansible.playbook = "ansible_vagrant/playbook.yml"
+      ansible.playbook = "ansible_vagrant/server-playbook.yml"
       ansible.galaxy_role_file = "ansible_vagrant/requirements.yml"
       ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
     end

@@ -1,8 +1,8 @@
 ---
 configs:
-  mymachine:
-    memory: "4000"
-    cpus: "2"
+  server:
+    memory: "6144"
+    cpus: "4"
     ip: "192.168.213.213"
     domain: vagrant.local
 ...
