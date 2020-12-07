@@ -39,9 +39,10 @@ Vagrant.configure(2) do |config|
     #s.hostmanager.aliases = %w(www.yourdomain.lokal)
 
     # Run Ansible from the Vagrant VM
+    s.vm.provision :shell, inline: "apt update && apt install -qy ansible"
     s.vm.provision "ansible_local" do |ansible|
-      ansible.install = true
-      ansible.install_mode = :default
+      #ansible.install = true
+      #ansible.install_mode = :default
       ansible.playbook = "ansible_vagrant/server-playbook.yml"
       ansible.galaxy_role_file = "ansible_vagrant/requirements.yml"
       ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
